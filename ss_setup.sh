@@ -62,7 +62,7 @@ pre_install() {
   fi
   # Install rust
   color_print "$BLUE" "安装rust，请按照提示选择安装方式"
-  curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
+  curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh -s -- -y
   # Install shadowsock
   color_print "$BLUE" "安装SS"
   "$HOME"/.cargo/bin/cargo install shadowsocks-rust

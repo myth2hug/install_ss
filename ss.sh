@@ -1,4 +1,8 @@
 #!/bin/bash
+# vps初始化脚本，使用默认参数静默安装shadowsocks。适用于centos7+
+# 生成url保存到 ~/link.txt
+# Author: eureka<t4nya7@outlook.com>
+# Since: 2023/2/10
 main(){
   pre_install
   mkdir /root/bin
@@ -13,8 +17,10 @@ main(){
 }
 
 # constant
-PORT=8388
-METHOD="chacha20-ietf-poly1305"
+PORT=$SS_PORT
+[[ -z "$PORT" ]] && PORT=8388
+METHOD=$SS_METHOD
+[[ -z "$METHOD" ]] && METHOD="chacha20-ietf-poly1305"
 PASSWORD=$(head /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 16 | head -n 1)
 
 # path
@@ -25,6 +31,9 @@ FILE_NAME="/root/ss-rust"
 NAME="shadowsocks"
 
 pre_install(){
+  if [ ! "$(command -v wget)" ]; then
+    yum install -y wget
+  fi
   TAG=$(wget -qO- -t1 -T2 "https://api.github.com/repos/shadowsocks/shadowsocks-rust/releases/latest" | grep "tag_name" | head -n 1 | awk -F ":" '{print $2}' | sed 's/\"//g;s/,//g;s/ //g')
   URL="https://github.com/shadowsocks/shadowsocks-rust/releases/download/${TAG}/shadowsocks-${TAG}.x86_64-unknown-linux-musl.tar.xz"
   wget -O "${FILE_NAME}.tar.xz" "$URL"

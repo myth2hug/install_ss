@@ -22,7 +22,7 @@ PASSWORD=$(head /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 16 | head -n 1)
 # path
 CONFIG_FILE="/etc/shadowsocks.json"
 SERVICE_FILE="/etc/systemd/system/shadowsocks.service"
-LINK_FILE="$HOME/link.txt"
+LINK_FILE="/root/link.txt"
 NAME="shadowsocks"
 
 pre_install() {
@@ -35,7 +35,7 @@ pre_install() {
   # Install rust
   curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh -s -- -y
   # Install shadowsock
-  "$HOME"/.cargo/bin/cargo install shadowsocks-rust
+  /root/.cargo/bin/cargo install shadowsocks-rust
 }
 
 gen_service() {
@@ -45,7 +45,7 @@ Description=Shadowsocks Server
 After=network.target
 
 [Service]
-ExecStart=$HOME/.cargo/bin/ssserver -c $CONFIG_FILE
+ExecStart=/root/.cargo/bin/ssserver -c $CONFIG_FILE
 
 Restart=on-abort
 
