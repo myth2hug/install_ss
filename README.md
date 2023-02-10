@@ -8,5 +8,5 @@ bash <(curl -sL https://raw.githubusercontent.com/myth2hug/install_ss/main/ss_se
 
 静默安装：
 ```shell
-bash <(curl -sL https://raw.githubusercontent.com/myth2hug/install_ss/main/ss_boot.sh)
+bash <(curl -sL https://raw.githubusercontent.com/myth2hug/install_ss/main/ss.sh)
 ```
